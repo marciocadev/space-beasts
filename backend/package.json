@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@winglibs/websockets": "file:../../winglibs/websockets/winglibs-websockets-0.0.2.tgz"
+  }
+}
