@@ -38,8 +38,6 @@ export const MechController = ({
     }
   });
 
-
-
   switch (animal) {
     case "bee":
       return (
