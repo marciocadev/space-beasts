@@ -2,8 +2,9 @@ import { useAtom, atom } from "jotai";
 import { w3cwebsocket } from "websocket";
 import { useEffect } from "react";
 
-const URL = "wss://674yswgfv2.execute-api.us-east-1.amazonaws.com/prod/";
-export const socket = new w3cwebsocket(URL);
+// const URL = "wss://674yswgfv2.execute-api.us-east-1.amazonaws.com/prod/";
+const URL = `${window.wingEnv.url}`;
+export const socket = new w3cwebsocket(URL.replace("127.0.0.1", "localhost"));
 export const charactersAtom = atom([]);
 
 export const SocketManager = () => {

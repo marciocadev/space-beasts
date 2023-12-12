@@ -1,4 +1,4 @@
-import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
+import { CapsuleCollider, CuboidCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { MechBarbaraTheBee } from "./mech/Mech_BarbaraTheBee";
 import { MechFernandoTheFlamingo } from "./mech/Mech_FernandoTheFlamingo";
 import { MechFinnTheFrog } from "./mech/Mech_FinnTheFrog";
@@ -22,27 +22,52 @@ export const MechController = ({
   const rigidbody = useRef();
   const [animation, setAnimation] = useState("Idle");
 
-  useFrame((_, delta) => {
-    if (!rigidbody.current) return;
+  // useFrame((_, delta) => {
+  //   if (!rigidbody.current) return;
 
-    const vector1 = vec3(rigidbody.current.translation());
-    const vector2 = new THREE.Vector3(position[0], position[1], position[2]);
-    if (vector1.distanceTo(vector2) > 0.1) {
-      setAnimation("Run");
-      character.current.lookAt(vector2);
-      const direction = new THREE.Vector3().copy(vector2).sub(vector1).normalize();
-      const impulse = delta * MOVEMENT_SPEED;
-      rigidbody.current.applyImpulse(direction.multiplyScalar(impulse), true);
-    } else {
-      setAnimation("Idle");
-    }
-  });
+  //   const vector1 = vec3(rigidbody.current.translation());
+  //   const vector2 = new THREE.Vector3(position[0], position[1], position[2]);
+  //   if (vector1.distanceTo(vector2) > 0.1) {
+  //     setAnimation("Run");
+  //     character.current.lookAt(vector2);
+  //     const direction = new THREE.Vector3().copy(vector2).sub(vector1).normalize();
+  //     const impulse = delta * MOVEMENT_SPEED;
+  //     rigidbody.current.applyImpulse(direction.multiplyScalar(impulse), true);
+  //   } else {
+  //     setAnimation("Idle");
+  //   }
+  // });
+
+  return (
+    <group ref={group} {...props}>
+      {/* <RigidBody
+        ref={rigidbody}
+        colliders={false}
+        linearDamping={12}
+        lockRotations
+      > */}
+      <group ref={character}>
+        <MechBarbaraTheBee
+          key={id}
+          animation={animation}
+          color={color}
+        />
+      </group>
+      {/* <CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
+      </RigidBody> */}
+    </group>
+  )
 
   switch (animal) {
     case "bee":
       return (
         <group ref={group} {...props}>
-          <RigidBody ref={rigidbody} colliders={false} linearDamping={12} lockRotations>
+          <RigidBody
+            ref={rigidbody}
+            colliders={false}
+            linearDamping={12}
+            lockRotations
+          >
             <group ref={character}>
               <MechBarbaraTheBee
                 key={id}
@@ -50,14 +75,21 @@ export const MechController = ({
                 color={color}
               />
             </group>
-            <CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
+            <CapsuleCollider
+              args={[0.7, 0.6]}
+              position={[0, 1.28, 0]} />
           </RigidBody>
         </group>
       )
     case "frog":
       return (
         <group ref={group} {...props}>
-          <RigidBody ref={rigidbody} colliders={false} linearDamping={12} lockRotations>
+          <RigidBody
+            ref={rigidbody}
+            colliders={false}
+            linearDamping={12}
+            lockRotations
+          >
             <group ref={character}>
               <MechFinnTheFrog
                 key={id}
@@ -65,14 +97,21 @@ export const MechController = ({
                 color={color}
               />
             </group>
-            <CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
+            <CapsuleCollider
+              args={[0.7, 0.6]}
+              position={[0, 1.28, 0]} />
           </RigidBody>
         </group>
       )
     case "redpanda":
       return (
         <group ref={group} {...props}>
-          <RigidBody ref={rigidbody} colliders={false} linearDamping={12} lockRotations>
+          <RigidBody
+            ref={rigidbody}
+            colliders={false}
+            linearDamping={12}
+            lockRotations
+          >
             <group ref={character}>
               <MechRaeTheRedPanda
                 key={id}
@@ -80,14 +119,21 @@ export const MechController = ({
                 color={color}
               />
             </group>
-            <CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
+            <CapsuleCollider
+              args={[0.7, 0.6]}
+              position={[0, 1.28, 0]} />
           </RigidBody>
         </group>
       )
     case "flamingo":
       return (
         <group ref={group} {...props}>
-          <RigidBody ref={rigidbody} colliders={false} linearDamping={12} lockRotations>
+          <RigidBody
+            ref={rigidbody}
+            colliders={false}
+            linearDamping={12}
+            lockRotations
+          >
             <group ref={character}>
               <MechFernandoTheFlamingo
                 key={id}

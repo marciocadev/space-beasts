@@ -2,10 +2,17 @@ bring ex;
 bring cloud;
 bring websockets;
 
+struct PlayerData {
+  animal: str;
+  color: str;
+  position: Array<num>;
+}
+
 class Util {
   extern "./util.js" pub static inflight _generateRandomHexcolor(): str;
   extern "./util.js" pub static inflight _generateRandomPosition(): Array<num>;
   extern "./util.js" pub static inflight _getRandomAnimal(): str;
+  extern "./util.js" pub static inflight _initPlayer(): PlayerData;
 }
 
 let tb = new ex.DynamodbTable(
@@ -49,12 +56,14 @@ let move = inflight (id: str, body: Json) => {
 };
 
 ws.onConnect(inflight(id: str): void => {
+  let animal = Util._initPlayer();
+
   tb.putItem({
     item: {
       "id": id,
-      "color": Util._generateRandomHexcolor(),
-      "position": Util._generateRandomPosition(),
-      "animal": Util._getRandomAnimal(),
+      "color": animal.color,//Util._generateRandomHexcolor(),
+      "position": animal.position,//Util._generateRandomPosition(),
+      "animal": animal.animal,//Util._getRandomAnimal(),
     }
   });
 });
@@ -78,12 +87,10 @@ ws.onMessage(inflight (id: str, body: str): void => {
   }
 });
 
-/* This method is temporarily required only for local execution (target sim) and will be deprecated in the future.
-*/
-// ws.initialize();
+ws.initialize();
 
-// let react = new ex.ReactApp(
-//   projectPath: "../frontend"
-// ) as "space-beats-app";
+let react = new ex.ReactApp(
+  projectPath: "../frontend"
+) as "space-beats-app";
 
-// react.addEnvironment("url", ws.url());
+react.addEnvironment("url", ws.url());
